@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layouts.app')
 
 @section('content')
 	<a class="btn btn-success" href="{{ route('posts.create') }}" role="button">Create</a>
@@ -7,6 +7,7 @@
 			<tr>
 				<th scope="col">Id</th>
 				<th scope="col">Title</th>
+				<th scope="col">Slug</th>
 				<th scope="col">Posted by</th>
 				<th scope="col">Created at</th>
 				<th scope="col">Actions</th>
@@ -17,6 +18,7 @@
 				<tr>
 					<th scope="row">{{ $post->id }}</th>
 					<td>{{ $post->title }}</td>
+					<td>{{ $post->slug }}</td>
 					<td>{{ $post->user->name }}</td>
 					<td>{{ \Carbon\Carbon::instance($post->created_at)->format('Y-m-d') }}</td>
 					<td>

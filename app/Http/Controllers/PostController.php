@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Post;
 use App\User;
 
@@ -25,35 +27,24 @@ class PostController extends Controller
 		]);
 	}
 
-	public function store()
+	public function store(StorePostRequest $request)
 	{
-		$request = request();
+		$data = $request->only(['title', 'description', 'user_id']);
 
-		Post::create([
-			'title' => $request->title,
-			'description' => $request->description,
-			'user_id' => $request->user
-		]);
+		Post::create($data);
 
 		return redirect()->route('posts.index');
 	}
 
-	public function show()
+	public function show(Post $post)
 	{
-		$request = request();
-		$id = $request->post;
-		$post = Post::findOrFail($id);
-
 		return view('posts.show', [
 			'post' => $post
 		]);
 	}
 
-	public function edit()
+	public function edit(Post $post)
 	{
-		$request = request();
-		$id = $request->post;
-		$post = Post::findOrFail($id);
 		$users = User::all();
 
 		return view('posts.edit', [
@@ -62,26 +53,17 @@ class PostController extends Controller
 		]);
 	}
 
-	public function update()
+	public function update(UpdatePostRequest $request, Post $post)
 	{
-		$request = request();
-		$id = $request->post;
-		$post = Post::find($id);
+		$data = $request->only(['title', 'description', 'user_id']);
 
-		$post->title = $request->title;
-		$post->description = $request->description;
-		$post->user_id = $request->user;
-		$post->save();
+		$post->update($data);
 
 		return redirect()->route('posts.index');
 	}
 
-	public function destroy()
+	public function destroy(Post $post)
 	{
-		$request = request();
-		$id = $request->post;
-		$post = Post::find($id);
-
 		$post->delete();
 
 		return redirect()->route('posts.index');

@@ -1,6 +1,16 @@
-@extends('layout.app')
+@extends('layouts.app')
 
 @section('content')
+	@if ($errors->any())
+		<div class="alert alert-danger">
+			<ul>
+				@foreach ($errors->all() as $error)
+					<li>{{ $error }}</li>
+				@endforeach
+			</ul>
+		</div>
+	@endif
+
 	<form method="POST" action="{{ route('posts.update', $post->id) }}">
 		@csrf
 		@method('PUT')
@@ -13,7 +23,7 @@
 			<textarea class="form-control" id="description" name="description" rows="3">{{ $post->description }}</textarea>
 		</div>
 		<div class="form-group">
-			<select class="custom-select" name="user">
+			<select class="custom-select" name="user_id">
 				@foreach ($users as $user)
 					@if ($post->user == $user)
 						<option value="{{ $user->id }}" selected>{{ $user->name }}</option>
