@@ -1,6 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
+	<div class="float-right">
+		@if (!Auth::user()->socials()->where('driver', 'github')->first())
+			<a class="btn btn-secondary" href="{{ route('github.login') }}">{{ __('Connect with GitHub') }}</a>
+		@else
+			<a class="btn btn-info" href="{{ route('github.info') }}">{{ __('Show GitHub Info') }}</a>
+		@endif
+		@if (!Auth::user()->socials()->where('driver', 'google')->first())
+			<a class="btn btn-secondary" href="{{ route('google.login') }}">{{ __('Connect with Google') }}</a>
+		@else
+			<a class="btn btn-info" href="{{ route('google.info') }}">{{ __('Show Google Info') }}</a>
+		@endif
+	</div>
 	<a class="btn btn-success" href="{{ route('posts.create') }}" role="button">Create</a>
 	<table class="table mt-2">
 		<thead>

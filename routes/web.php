@@ -19,6 +19,13 @@ Route::get('/', function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('posts', 'PostController')->middleware('auth');
+Route::resource('/posts', 'PostController')->middleware('auth');
+
+Route::get('/github/login', 'GithubController@redirect')->name('github.login');
+Route::get('/github/login/callback', 'GithubController@handleCallback')->name('github.login.callback');
+Route::get('/github/info', 'GithubController@info')->name('github.info');
+Route::get('/google/login', 'GoogleController@redirect')->name('google.login');
+Route::get('/google/login/callback', 'GoogleController@handleCallback')->name('google.login.callback');
+Route::get('/google/info', 'GoogleController@info')->name('google.info');
 
 Auth::routes();

@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/sanctum/token', 'API\TokenController@issueToken')->name('sanctum.token');
+
+Route::resource('/posts', 'API\PostController', [
+	'as' => 'api'
+])->only(['index', 'store', 'show'])->middleware('auth:sanctum');
